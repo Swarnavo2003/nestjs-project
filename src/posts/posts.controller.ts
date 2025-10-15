@@ -10,9 +10,14 @@ import {
   Post,
   Put,
   Query,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import type { Post as PostInterface } from './interfaces/post.interface';
+import { CreatePostDto } from './dto/create-post.dto';
+import { UpdatePostDto } from './dto/update-post.dto';
+import { PostExistsPipe } from './pipes/post-exits.pipe';
 
 @Controller('posts')
 export class PostsController {
@@ -32,27 +37,35 @@ export class PostsController {
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number): PostInterface {
+  findOne(
+    @Param('id', ParseIntPipe, PostExistsPipe) id: number,
+  ): PostInterface {
     return this.postsService.findOne(id);
   }
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  create(@Body() createPostData: Omit<PostInterface, 'id' | 'createdAt'>) {
+  @UsePipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+    }),
+  )
+  create(@Body() createPostData: CreatePostDto): PostInterface {
     return this.postsService.create(createPostData);
   }
 
   @Put(':id')
   update(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() updatePostData: Partial<Omit<PostInterface, 'id' | 'createdAt'>>,
+    @Param('id', ParseIntPipe, PostExistsPipe) id: number,
+    @Body() updatePostData: UpdatePostDto,
   ) {
     return this.postsService.update(id, updatePostData);
   }
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  delete(@Param('id', ParseIntPipe) id: number) {
+  delete(@Param('id', ParseIntPipe, PostExistsPipe) id: number) {
     return this.postsService.delete(id);
   }
 }
