@@ -14,7 +14,9 @@ export class PostExistsPipe implements PipeTransform {
     try {
       this.postsService.findOne(value);
     } catch (e) {
-      throw new NotFoundException(`Post with Id ${value} not found`);
+      throw new NotFoundException(
+        `Post with Id ${value} not found. ${JSON.stringify(metadata)} ${e}`,
+      );
     }
     return value;
   }
