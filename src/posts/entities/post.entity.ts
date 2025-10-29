@@ -3,6 +3,7 @@ import {
   CreateDateColumn,
   Entity,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 
 @Entity()
@@ -23,5 +24,6 @@ export class Post {
   createdAt: Date;
 
   @Column({ nullable: true })
+  @UpdateDateColumn({ nullable: true })
   updatedAt?: Date;
 }

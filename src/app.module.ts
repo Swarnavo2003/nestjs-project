@@ -11,9 +11,9 @@ import { Post } from './posts/entities/post.entity';
       type: 'postgres',
       host: 'localhost',
       port: 5432,
-      username: 'user',
-      password: 'pass',
-      database: 'mydb',
+      username: 'postgres',
+      password: 'password',
+      database: 'youtube-nestjs-project',
       entities: [Post], // array of entitites that u want to register
       synchronize: true, // dev mode
     }),
