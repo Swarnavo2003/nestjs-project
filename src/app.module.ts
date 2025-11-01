@@ -5,6 +5,7 @@ import { PostsModule } from './posts/posts.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Post } from './posts/entities/post.entity';
 import { AuthModule } from './auth/auth.module';
+import { User } from './auth/entities/user.entity';
 
 @Module({
   imports: [
@@ -15,7 +16,7 @@ import { AuthModule } from './auth/auth.module';
       username: 'postgres',
       password: 'password',
       database: 'youtube-nestjs-project',
-      entities: [Post], // array of entitites that u want to register
+      entities: [Post, User], // array of entitites that u want to register
       synchronize: true, // dev mode
     }),
     PostsModule,
