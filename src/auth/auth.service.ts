@@ -133,7 +133,20 @@ export class AuthService {
     }
   }
 
-  //TODO find the current user by id
+  async getUserById(userId: number) {
+    const user = await this.userRepository.findOne({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (!user) {
+      throw new UnauthorizedException('User not found');
+    }
+
+    const { password, ...result } = user;
+    return result;
+  }
 
   private async hashPassword(password: string): Promise<string> {
     return bcrypt.hash(password, 10);

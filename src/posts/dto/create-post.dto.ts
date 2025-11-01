@@ -12,9 +12,9 @@ export class CreatePostDto {
   @MinLength(5, { message: 'Content must be at least 3 characters long' })
   content: string;
 
-  @IsNotEmpty({ message: 'Author is required' })
-  @IsString({ message: 'Author must be a string' })
-  @MinLength(3, { message: 'Author must be at least 3 characters long' })
-  @MaxLength(25, { message: 'Author must be at most 50 characters long' })
-  authorName: string;
+  // @IsNotEmpty({ message: 'Author is required' })
+  // @IsString({ message: 'Author must be a string' })
+  // @MinLength(3, { message: 'Author must be at least 3 characters long' })
+  // @MaxLength(25, { message: 'Author must be at most 50 characters long' })
+  // authorName: string;
 }
